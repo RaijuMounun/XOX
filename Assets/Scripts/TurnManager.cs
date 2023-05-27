@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,6 @@ public class TurnManager : MonoBehaviour
     GameObject tileParent;
 
     public int Turn { get; set; }
-    public Color xColor, oColor;
     public Sprite xSprite, oSprite;
 
     public List<TileCon> Tilecons => tileCons;
@@ -18,23 +16,19 @@ public class TurnManager : MonoBehaviour
 
     public bool isGameStarted;
 
+    //UI
     [SerializeField] Canvas canvas;
     [SerializeField] Text startText, winnerText;
     [SerializeField] Button replayButton;
 
+
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        if (Instance == null) Instance = this;
 
         tileParent = GameObject.Find("Tiles");
-        foreach (var item in tileParent.transform.GetComponentsInChildren<TileCon>())
-        {
-            tileCons.Add(item);
-        }
-
+        foreach (TileCon item in tileParent.transform.GetComponentsInChildren<TileCon>()) tileCons.Add(item);
     }
 
     public void OnGameStart()
@@ -50,34 +44,21 @@ public class TurnManager : MonoBehaviour
     public void OnClickReplay()
     {
         OnGameStart();
-        foreach (var item in tileCons)
-        {
-            item.SetState(TileType.Empty);
-        }
+        foreach (TileCon item in tileCons) item.SetState(TileType.Empty);
     }
 
 
     public void OnGameEnd(TileType _type)
     {
         isGameStarted = false;
+
         canvas.enabled = true;
-
         startText.enabled = false;
-
         winnerText.enabled = true;
+
         string result = "";
-        switch (_type)
-        {
-            case TileType.X:
-                result = "X WINS!";
-                break;
-            case TileType.O:
-                result = "O WINS!";
-                break;
-            default:
-                result = "TIE!";
-                break;
-        }
+        if (_type == TileType.Empty) result = "TIE!";
+        else result = _type.ToString() + " WINS!";
 
         winnerText.text = result;
 

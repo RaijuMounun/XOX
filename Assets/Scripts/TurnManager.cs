@@ -47,7 +47,6 @@ public class TurnManager : MonoBehaviour
         foreach (TileCon item in tileCons) item.SetState(TileType.Empty);
     }
 
-
     public void OnGameEnd(TileType _type)
     {
         isGameStarted = false;
@@ -64,9 +63,6 @@ public class TurnManager : MonoBehaviour
 
         replayButton.gameObject.SetActive(true);
     }
-
-
-
 
     public (bool, TileType) CheckWin()
     {
@@ -86,12 +82,11 @@ public class TurnManager : MonoBehaviour
 
                 if (next2.state != tile.state) continue; // Eğer komşunun komşusunun state'i şu anki tile'ın state'inden farklıysa devam et
 
-                return (true, tile.state); // Eğer yukarıdaki koşulların hiçbiri sağlanmıyorsa oyunu kazanılmıştır
+                return (true, tile.state); // Eğer yukarıdaki koşulların hiçbiri sağlanmıyorsa oyun kazanılmıştır
             }
         }
         return (false, TileType.Empty);
     }
 
-    public bool HasEmptyTile() { return tileCons.Exists(x => x.state == TileType.Empty); }
-
+    public bool HasEmptyTile() => return tileCons.Exists(x => x.state == TileType.Empty);
 }

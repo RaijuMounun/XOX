@@ -8,16 +8,11 @@ public class TileCon : MonoBehaviour, IPointerDownHandler
     public TileType state;
     public Vector2 coords;
 
-
-
     private void Awake()
     {
         turnManager = TurnManager.Instance;
         sprRdr = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
-
-
-
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -25,14 +20,12 @@ public class TileCon : MonoBehaviour, IPointerDownHandler
 
         if (!turnManager.isGameStarted) turnManager.OnGameStart(); //oyun başlamamışsa başlat
 
-
         TileType _type = turnManager.Turn % 2 == 0 ? TileType.X : TileType.O;
         SetState(_type);
         TurnManager.Instance.Turn++;
 
         var result = turnManager.CheckWin();
         bool hasWinner = result.Item1;
-
 
         if (hasWinner)
         {
@@ -52,7 +45,6 @@ public class TileCon : MonoBehaviour, IPointerDownHandler
         state = _state;
         sprRdr.sprite = state == TileType.X ? turnManager.xSprite : turnManager.oSprite;
         if (state == TileType.Empty) sprRdr.sprite = null;
-
     }
 
 
@@ -69,9 +61,6 @@ public class TileCon : MonoBehaviour, IPointerDownHandler
         return turnManager.Tilecons.Find(tile => tile.coords == _nextTile);
     }
 }
-
-
-
 
 public enum TileType
 {
